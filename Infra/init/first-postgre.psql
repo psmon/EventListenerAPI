@@ -1,0 +1,20 @@
+-- Drop table
+
+-- DROP TABLE apilog.api_event_log;
+
+CREATE TABLE IF NOT EXISTS apilog.api_event_log
+(
+	uuid VARCHAR(50) NOT NULL
+	,event_ver VARCHAR(10) NOT NULL
+	,event_type VARCHAR(20) NOT NULL
+	,event_action VARCHAR(20) NOT NULL
+	,etc_str1 VARCHAR(100)
+	,etc_str2 VARCHAR(100)
+	,etc_str3 VARCHAR(100)
+	,etc_num1 INTEGER
+	,etc_num2 INTEGER
+	,etc_num3 INTEGER
+	,user_ip VARCHAR(15)
+	,upd_dt TIMESTAMP WITHOUT TIME ZONE
+	CONSTRAINT api_event_log_pk PRIMARY KEY (uuid)
+);
