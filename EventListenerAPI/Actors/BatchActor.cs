@@ -4,6 +4,7 @@ using Akka.Event;
 using EFCore.BulkExtensions;
 
 using EventListenerAPI.Models;
+using EventListenerAPI.Services;
 
 namespace EventListenerAPI.Actors
 {
@@ -31,10 +32,14 @@ namespace EventListenerAPI.Actors
                 {
                     var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
+                    var indexService = scope.ServiceProvider.GetRequiredService<IndexService>();
+
                     if(eventLogs.Count > 0)
                     {                        
                         //배치처리 GO
-                        await appDbContext.BulkInsertAsync(eventLogs);  
+                        await appDbContext.BulkInsertAsync(eventLogs); 
+                        
+                        await indexService.BulkInsertAsync(eventLogs);
                     }
                 }
             });

@@ -7,20 +7,20 @@ namespace EventListenerAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class TestController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
 
         private readonly EventService _eventService;
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<TestController> _logger;
 
         private readonly IActorBridge _bridge;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, EventService eventService, IActorBridge bridge)
+        public TestController(ILogger<TestController> logger, EventService eventService, IActorBridge bridge)
         {
             _logger = logger;
             _bridge = bridge;

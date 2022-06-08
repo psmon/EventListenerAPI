@@ -1,7 +1,11 @@
 # EventListenerAPI
 
 
+# Local Infra
 
+- Postgre : localhost:5432
+- Elk : http://localhost:9200
+- Kibana : http://localhost:9400/app/kibana
 
 
 # 참고 링크

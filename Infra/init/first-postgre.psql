@@ -1,20 +1,21 @@
+-- apilog.api_event_log definition
+
 -- Drop table
 
 -- DROP TABLE apilog.api_event_log;
 
-CREATE TABLE IF NOT EXISTS apilog.api_event_log
-(
-	uuid VARCHAR(50) NOT NULL
-	,event_ver VARCHAR(10) NOT NULL
-	,event_type VARCHAR(20) NOT NULL
-	,event_action VARCHAR(20) NOT NULL
-	,etc_str1 VARCHAR(100)
-	,etc_str2 VARCHAR(100)
-	,etc_str3 VARCHAR(100)
-	,etc_num1 INTEGER
-	,etc_num2 INTEGER
-	,etc_num3 INTEGER
-	,user_ip VARCHAR(15)
-	,upd_dt TIMESTAMP WITHOUT TIME ZONE
-	CONSTRAINT api_event_log_pk PRIMARY KEY (uuid)
+CREATE TABLE apilog.api_event_log (
+	uuid varchar(50) NOT NULL,
+	event_ver varchar(10) NOT NULL,
+	event_type varchar(20) NOT NULL,
+	event_action varchar(20) NOT NULL,
+	etc_str1 varchar(100) NULL,
+	etc_str2 varchar(100) NULL,
+	etc_str3 varchar(100) NULL,
+	etc_num1 int4 NULL,
+	etc_num2 int4 NULL,
+	etc_num3 int4 NULL,
+	user_ip varchar(15) NULL,
+	upd_dt timestamp NULL
 );
+CREATE INDEX api_event_log_uuid_idx ON apilog.api_event_log (uuid);

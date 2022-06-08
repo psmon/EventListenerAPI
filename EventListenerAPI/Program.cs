@@ -20,8 +20,12 @@ var postgreConnectionString =builder.Configuration["ConnectionStrings:Postgre"];
 builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql( postgreConnectionString, o => o.SetPostgresVersion(9, 6) ));
 
-builder.Services.AddScoped<EventService>();
 
+builder.Services.AddSingleton(typeof(IElasticEngine), typeof(ElasticEngine));
+
+builder.Services.AddScoped<IndexService>();
+
+builder.Services.AddScoped<EventService>();
 
 builder.Services.AddSingleton<IActorBridge, AkkaService>();
 

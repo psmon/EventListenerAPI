@@ -34,7 +34,7 @@ namespace EventListenerAPI.Actors
                 }
 
                 return null;
-            }, TimeSpan.FromSeconds(1));
+            }, TimeSpan.FromSeconds(3));
 
 
             WhenUnhandled(state =>
