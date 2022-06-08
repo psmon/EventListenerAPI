@@ -19,9 +19,6 @@ namespace EventListenerAPI.Models
 		public int etc_num3 { get; set; }
 		public string user_ip { get; set; }
 		public DateTime upd_dt { get; set; }
-
-
-
     }
 
 	public static class ConvertUtil

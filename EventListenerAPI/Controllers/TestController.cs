@@ -48,8 +48,7 @@ namespace EventListenerAPI.Controllers
         
         [HttpPost(nameof(AddEventBulkData))]  
         public async Task<IActionResult> AddEventBulkData(int repeat)  
-        {  
-            var response = await _eventService.AddBulkDataAsync(repeat);
+        {              
             for(int i = 0; i < repeat; i++)
             {
                 _bridge.Tell(new EventLog()
