@@ -14,6 +14,7 @@
   <ItemGroup>
     <PackageReference Include="Akka" Version="1.4.39" />
     <PackageReference Include="Akka.DependencyInjection" Version="1.4.39" />
+    <PackageReference Include="Akka.Logger.NLog" Version="1.4.10" />
     <PackageReference Include="EFCore.BulkExtensions" Version="6.5.0" />
     <PackageReference Include="Flurl.Http" Version="3.2.3" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />

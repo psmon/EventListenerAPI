@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Akka.Actor;
+using Akka.Configuration;
 using Akka.DependencyInjection;
 
 using EventListenerAPI.Actors;
@@ -11,6 +12,7 @@ using EventListenerAPI.Models;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using AkkaConfig = Akka.Configuration.Config;
 
 namespace EventListenerAPI.Services
 {
@@ -41,12 +43,14 @@ namespace EventListenerAPI.Services
 
             var bootstrap = BootstrapSetup.Create();
 
-
             // enable DI support inside this ActorSystem, if needed
             var diSetup = DependencyResolverSetup.Create(_serviceProvider);
+            
 
             // merge this setup (and any others) together into ActorSystemSetup
-            var actorSystemSetup = bootstrap.And(diSetup);
+            var actorSystemSetup = 
+                bootstrap.And(diSetup);
+            
 
             // start ActorSystem
             _actorSystem = ActorSystem.Create("akka-universe", actorSystemSetup);
@@ -60,6 +64,9 @@ namespace EventListenerAPI.Services
                         
                 //배치처리기 지정..
                 fsmActor.Tell(new SetTarget(batchActor));
+
+                batchActor.Tell(new SetTarget(fsmActor));
+
                 _fsmActor = fsmActor;
 
             });

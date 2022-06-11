@@ -70,10 +70,10 @@ namespace EventListenerAPI.Services
 
             if (!bulkResult_descriptorAutokeyword.ApiCall.Success)
             {
-                _logger.LogError("bulkResult_descriptorAutokeyword");                
+                _logger.LogError("Elk:BulkInsertAsync");                
             }
 
-            _logger.LogInformation($"Elk:IndexingAutoCompleted");
+            _logger.LogInformation($"Elk:BulkInsertAsync Count:{eventLogs.Count}");
         }
     }
 }

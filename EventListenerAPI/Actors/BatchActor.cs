@@ -1,4 +1,6 @@
-﻿using Akka.Actor;
+﻿using System.Text.Json;
+
+using Akka.Actor;
 using Akka.Event;
 
 using EFCore.BulkExtensions;
@@ -14,9 +16,31 @@ namespace EventListenerAPI.Actors
 
         private readonly IServiceScopeFactory _scopeFactory;
 
+        private IActorRef _fsmActor;
+
+        private const int MaxBatchSize = 300;
+
         public BatchActor(IServiceScopeFactory scopeFactory)
         {
             _scopeFactory = scopeFactory;
+
+            ReceiveAsync<SetTarget>( async fsmActor => 
+            {
+                _fsmActor = fsmActor.Ref;
+            });
+
+            ReceiveAsync<int>( async count => 
+            { 
+                log.Info( "Queue:" + count );
+
+                if(count > MaxBatchSize)
+                {
+                    if(_fsmActor != null)
+                    {
+                        _fsmActor.Tell(new Flush());
+                    }                    
+                }
+            });
 
             ReceiveAsync<Batch>( async message =>
             {
@@ -30,16 +54,32 @@ namespace EventListenerAPI.Actors
 
                 using(var scope = _scopeFactory.CreateScope())
                 {
-                    var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                    string processStep = "InQueue";
 
-                    var indexService = scope.ServiceProvider.GetRequiredService<IndexService>();
+                    try
+                    {
+                        var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-                    if(eventLogs.Count > 0)
-                    {                        
-                        //배치처리 GO
-                        await appDbContext.BulkInsertAsync(eventLogs); 
+                        var indexService = scope.ServiceProvider.GetRequiredService<IndexService>();                    
+
+                        if(eventLogs.Count > 0)
+                        {               
                         
-                        await indexService.BulkInsertAsync(eventLogs);
+                            processStep = "Try appDbContext.BulkInsertAsync";
+
+                            //배치처리 GO
+                            await appDbContext.BulkInsertAsync(eventLogs); 
+
+                            processStep = "Try indexService.BulkInsertAsync";
+                        
+                            await indexService.BulkInsertAsync(eventLogs);
+                        }
+                        
+                    }
+                    catch( Exception ex )
+                    {
+                        var json = JsonSerializer.Serialize(eventLogs);
+                        log.Error( processStep + " ==> " + json );
                     }
                 }
             });

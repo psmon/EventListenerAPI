@@ -34,7 +34,7 @@ namespace EventListenerAPI.Actors
                 }
 
                 return null;
-            }, TimeSpan.FromSeconds(3));
+            }, TimeSpan.FromSeconds(1));
 
 
             WhenUnhandled(state =>
@@ -43,7 +43,11 @@ namespace EventListenerAPI.Actors
                 {
                     Todo t = state.StateData as Todo;
                     Queue q = state.FsmEvent as Queue;
-                    return GoTo(State.Active).Using(t.Copy(t.Queue.Add(q.Obj)));
+                    var data = t.Copy(t.Queue.Add(q.Obj));
+
+                    t.Target.Tell(data.Queue.Count);
+                    
+                    return GoTo(State.Active).Using(data);
                 }
                 else
                 {
