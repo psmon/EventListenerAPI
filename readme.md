@@ -136,14 +136,15 @@
 
 # Local Infra
 
-- Postgre : localhost:5432
-- Elk : http://localhost:9200
-- Kibana : http://localhost:9400/app/kibana
-
-
     infra>docker-compose up -d  -명령으로 LocalFirst 인프라구동
 
+    - Postgre : localhost:5432
+    - Elk : http://localhost:9200
+    - Kibana : http://localhost:9400/app/kibana
+
+    
 <pre>
+
 version: '3.4'
  
 services:
