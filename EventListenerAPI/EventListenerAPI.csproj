@@ -8,14 +8,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="NLog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Akka" Version="1.4.39" />
     <PackageReference Include="Akka.DependencyInjection" Version="1.4.39" />
     <PackageReference Include="EFCore.BulkExtensions" Version="6.5.0" />
     <PackageReference Include="Flurl.Http" Version="3.2.3" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="NEST" Version="7.17.2" />
+	  <PackageReference Include="NLog.Web.AspNetCore" Version="5.0.0" />
+	  <PackageReference Include="NLog" Version="5.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="NLog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Program.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
 
 </Project>

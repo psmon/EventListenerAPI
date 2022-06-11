@@ -4,7 +4,16 @@ using EventListenerAPI.Services;
 
 using Microsoft.EntityFrameworkCore;
 
+using NLog;
+using NLog.Web;
 var builder = WebApplication.CreateBuilder(args);
+
+// Log
+builder.Logging.ClearProviders();
+builder.Logging.Configure(logging=>{     
+}).UseNLog();
+
+
 
 // Add services to the container.
 
